@@ -6,13 +6,13 @@
 	<nav
 		class="bg-violet-600 p-4 backdrop-blur bg-opacity-10 fixed w-full z-10 border-b border-violet-600"
 	>
-		<ul class="flex gap-2 text-lg text-white">
-			<li><a href="/home">Home</a></li>
-			<li><a href="/about">About</a></li>
-			<li><a href="/expenses">Expenses</a></li>
-		</ul>
+		<h1
+			class="text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-purple-400 via-rose-300 to-fuchsia-600"
+		>
+			TRAVEL EXPENSE APP - POLEN
+		</h1>
 	</nav>
-	<div class="pt-16 w-full h-full">
+	<div class="px-2 pt-16 w-full h-full">
 		<slot />
 	</div>
 </div>
