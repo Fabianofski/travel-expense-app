@@ -78,8 +78,15 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="flex gap-2">
-		<p class="text-lg font-bold">TOTAL: 345,56€</p>
-		<p class="text-base font-bold">(p.P.: 34,56€)</p>
+	<div class="stats shadow">
+		<div class="stat">
+			<div class="stat-title">Total</div>
+			<div class="stat-value text-2xl">654,45€</div>
+		</div>
+
+		<div class="stat">
+			<div class="stat-title">Total p. P.</div>
+			<div class="stat-value text-2xl">234,45€</div>
+		</div>
 	</div>
 </div>

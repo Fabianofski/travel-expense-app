@@ -12,7 +12,7 @@
 			TRAVEL EXPENSE APP - POLEN
 		</h1>
 	</nav>
-	<div class="px-2 pt-16 w-full h-full">
+	<div class="px-2 pt-16 pb-4 w-full h-full">
 		<slot />
 	</div>
 </div>
