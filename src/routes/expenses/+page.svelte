@@ -10,7 +10,7 @@
 			expenseType: 'Supermarkt',
 			date: new Date(),
 			amount: 25.75,
-			participants: participants
+			participants: ['tobias', 'daniel']
 		}
 	];
 </script>
