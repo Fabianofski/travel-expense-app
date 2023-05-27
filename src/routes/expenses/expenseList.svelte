@@ -25,7 +25,7 @@
 		</label>
 	</div>
 	<div class="overflow-x-auto w-full">
-		<table class="table">
+		<table class="table w-full">
 			<!-- head -->
 			<thead>
 				<tr>

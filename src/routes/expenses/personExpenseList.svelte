@@ -7,8 +7,9 @@
 
 	type expensesPerPersonType = {
 		[key: string]: {
-			amount: number;
 			times: number;
+			amount: number;
+			share: number;
 		};
 	};
 
@@ -21,13 +22,17 @@
 		participants.forEach((participant) => {
 			data[participant.toLowerCase()] = {
 				amount: 0,
-				times: 0
+				times: 0,
+				share: 0
 			};
 		});
 
 		expenses.forEach((expense) => {
 			data[expense.buyer.toLowerCase()].amount += expense.amount;
 			data[expense.buyer.toLowerCase()].times++;
+			expense.participants.forEach((participant) => {
+				data[participant].share += expense.amount / expense.participants.length;
+			});
 		});
 
 		return Object.fromEntries(Object.entries(data).sort(([, a], [, b]) => b.amount - a.amount));
@@ -45,8 +50,10 @@
 				<tr>
 					<th />
 					<th>Name</th>
-					<th>Bezahlt</th>
+					<th>Anzahl</th>
 					<th>Betrag</th>
+					<th>Anteil</th>
+					<th>Differenz</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -67,6 +74,8 @@
 						</td>
 						<td> {expensesPerPerson[name].times} mal</td>
 						<td> {expensesPerPerson[name].amount}€ </td>
+						<td> {expensesPerPerson[name].share.toFixed(2)}€ </td>
+						<td> {(expensesPerPerson[name].amount - expensesPerPerson[name].share).toFixed(2)}€</td>
 					</tr>
 				{/each}
 			</tbody>
