@@ -1,16 +1,33 @@
 <script lang="ts">
 	import ExpenseModal from './addExpenseModal.svelte';
 	import type { Expense } from '../../../models/expense';
+	import { expensesStore } from './store';
 
-	export let expenses: Expense[];
-	export let participants: string[];
+	let cost: { total: number; totalPerPerson: number } = { total: 0, totalPerPerson: 0 };
+	function calculateTotal() {
+		let cost: { total: number; totalPerPerson: number } = { total: 0, totalPerPerson: 0 };
+		expenses.forEach((expense) => {
+			cost.total += expense.amount;
+		});
+		cost.totalPerPerson = cost.total / participants.length || 0;
+		return cost;
+	}
 
-	const cost: { total: number; totalPerPerson: number } = { total: 0, totalPerPerson: 0 };
-
-	expenses.forEach((expense) => {
-		cost.total += expense.amount;
+	let expenses: Expense[] = [];
+	export let participants: string[] = [];
+	expensesStore.subscribe((value) => {
+		if (value) expenses = value;
+		cost = calculateTotal();
 	});
-	cost.totalPerPerson = cost.total / participants.length;
+
+	function removeExpense(index: number) {
+		expensesStore.update((value: Expense[] | null) => {
+			console.log(value);
+			if (!value) return [];
+			value.splice(index, 1);
+			return value;
+		});
+	}
 </script>
 
 <ExpenseModal {participants} />
@@ -42,6 +59,7 @@
 					<th>Betrag</th>
 					<th>Typ</th>
 					<th>Teilnehmer</th>
+					<th />
 				</tr>
 			</thead>
 			<tbody>
@@ -64,7 +82,7 @@
 								</div>
 							</div>
 						</td>
-						<td> {expense.amount}€</td>
+						<td> {expense.amount.toFixed(2)}€</td>
 						<td> {expense.expenseType} </td>
 						<td>
 							<div class="flex">
@@ -80,6 +98,29 @@
 								{/each}
 							</div>
 						</td>
+						<td>
+							<button
+								class="btn btn-error"
+								on:click={() => {
+									removeExpense(index);
+								}}
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="w-6 h-6"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+									/>
+								</svg>
+							</button>
+						</td>
 					</tr>
 				{/each}
 			</tbody>
@@ -88,7 +129,7 @@
 	<div class="stats shadow">
 		<div class="stat">
 			<div class="stat-title">Total</div>
-			<div class="stat-value text-2xl">{cost.total}€</div>
+			<div class="stat-value text-2xl">{cost.total.toFixed(2)}€</div>
 		</div>
 
 		<div class="stat">

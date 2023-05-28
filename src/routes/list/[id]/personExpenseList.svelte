@@ -1,9 +1,6 @@
 <script lang="ts">
 	import type { Expense } from '../../../models/expense';
-
-	function capitalizeFirstLetter(string: string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	}
+	import { expensesStore } from './store';
 
 	type expensesPerPersonType = {
 		[key: string]: {
@@ -12,9 +9,6 @@
 			share: number;
 		};
 	};
-
-	export let expenses: Expense[];
-	export let participants: string[];
 
 	function getExpensesPerPerson(): expensesPerPersonType {
 		const data: expensesPerPersonType = {};
@@ -37,7 +31,19 @@
 
 		return Object.fromEntries(Object.entries(data).sort(([, a], [, b]) => b.amount - a.amount));
 	}
-	const expensesPerPerson = getExpensesPerPerson();
+
+	let expenses: Expense[] = [];
+	export let participants: string[] = [];
+
+	let expensesPerPerson: expensesPerPersonType = getExpensesPerPerson();
+	expensesStore.subscribe((value) => {
+		if (value) expenses = value;
+		expensesPerPerson = getExpensesPerPerson();
+	});
+
+	function capitalizeFirstLetter(string: string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
 </script>
 
 <div class="flex flex-col gap-2">
@@ -73,7 +79,7 @@
 							</div>
 						</td>
 						<td> {expensesPerPerson[name].times} mal</td>
-						<td> {expensesPerPerson[name].amount}€ </td>
+						<td> {expensesPerPerson[name].amount.toFixed(2)}€ </td>
 						<td> {expensesPerPerson[name].share.toFixed(2)}€ </td>
 						<td> {(expensesPerPerson[name].amount - expensesPerPerson[name].share).toFixed(2)}€</td>
 					</tr>

@@ -1,5 +1,43 @@
 <script lang="ts">
-	export let participants: string[];
+	import type { Expense } from '../../../models/expense';
+	import { expensesStore } from './store';
+
+	export let participants: string[] = [];
+
+	let buyer: string | null = null;
+	let expenseType: string = '';
+	let date: string = new Date().toISOString().substring(0, 10);
+	let amount: number | null = null;
+	let modalParticipants: { [key: string]: boolean } = {};
+	participants.forEach((participant) => {
+		modalParticipants[participant] = true;
+	});
+
+	function getParticipantsArray(): string[] {
+		const expenseParticipants: string[] = [];
+		Object.keys(modalParticipants).forEach((participant) => {
+			if (modalParticipants[participant]) expenseParticipants.push(participant);
+		});
+		return expenseParticipants;
+	}
+
+	function handleSubmit() {
+		let expense: Expense = {
+			buyer: buyer,
+			expenseType: expenseType,
+			date: new Date(date),
+			amount: amount || 0,
+			participants: getParticipantsArray()
+		};
+		console.log(expense);
+
+		expensesStore.update((value: Expense[] | null) => {
+			if (!value) return null;
+			value.push(expense);
+			return value;
+		});
+		document.getElementById('add-expense-modal')?.click();
+	}
 
 	function capitalizeFirstLetter(string: string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);
@@ -26,37 +64,43 @@
 				</label>
 			</div>
 		</div>
-		<form class="w-full flex flex-col items-center">
+		<form
+			class="w-full flex flex-col items-center"
+			method="POST"
+			on:submit|preventDefault={handleSubmit}
+		>
 			<div class="form-control w-full max-w-s">
-				<label class="label" for="">
+				<label class="label" for="date">
 					<span class="label-text">Datum</span>
 				</label>
 				<input
 					type="date"
-					value={new Date().toISOString().substring(0, 10)}
+					name="date"
 					class="input input-bordered w-full max-w-s"
+					bind:value={date}
 					required
 				/>
 			</div>
 			<div class="form-control w-full max-w-s">
-				<label class="label" for="">
+				<label class="label" for="buyer">
 					<span class="label-text">Käufer</span>
 				</label>
-				<select class="select select-bordered" required>
-					<option disabled selected hidden>Käufer...</option>
+				<select class="select select-bordered" required name="buyer" bind:value={buyer}>
 					{#each participants as participant}
 						<option>{capitalizeFirstLetter(participant)}</option>
 					{/each}
 				</select>
 			</div>
 			<div class="form-control w-full max-w-s">
-				<label class="label" for="">
+				<label class="label" for="expenseType">
 					<span class="label-text">Ausgabentyp</span>
 				</label>
 				<input
+					name="expenseType"
 					type="text"
 					placeholder="Supermarkt, Tanken..."
 					class="input input-bordered w-full max-w-s"
+					bind:value={expenseType}
 					required
 				/>
 			</div>
@@ -65,9 +109,12 @@
 					<span class="label-text">Betrag</span>
 				</label>
 				<input
-					type="text"
+					name="amount"
+					type="number"
+					step="0.01"
 					placeholder="0,00€"
 					class="input input-bordered w-full max-w-s"
+					bind:value={amount}
 					required
 				/>
 			</div>
@@ -79,16 +126,21 @@
 					{#each participants as participant}
 						<div class="form-control">
 							<label class="label cursor-pointer">
-								<input type="checkbox" checked class="checkbox" />
+								<input
+									name={`select-${participant}`}
+									type="checkbox"
+									bind:checked={modalParticipants[participant]}
+									class="checkbox"
+								/>
 								<span class="label-text">{capitalizeFirstLetter(participant)}</span>
 							</label>
 						</div>
 					{/each}
 				</div>
 			</div>
+			<div class="modal-action w-full">
+				<button type="submit" class="btn btn-primary w-full"> Hinzufügen </button>
+			</div>
 		</form>
-		<div class="modal-action">
-			<label for="add-expense-modal" class="btn btn-primary w-full">Hinzufügen</label>
-		</div>
 	</div>
 </div>
