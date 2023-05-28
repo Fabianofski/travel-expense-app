@@ -2,9 +2,11 @@
 	import type { Expense } from '../../../models/expense';
 	import { expensesStore } from './store';
 
+	export let id: string;
+
 	export let participants: string[] = [];
 
-	let buyer: string | null = null;
+	let buyer: string = '';
 	let expenseType: string = '';
 	let date: string = new Date().toISOString().substring(0, 10);
 	let amount: number | null = null;
@@ -12,6 +14,8 @@
 	participants.forEach((participant) => {
 		modalParticipants[participant] = true;
 	});
+
+	let loading = false;
 
 	function getParticipantsArray(): string[] {
 		const expenseParticipants: string[] = [];
@@ -22,21 +26,54 @@
 	}
 
 	function handleSubmit() {
+		loading = true;
+
 		let expense: Expense = {
 			buyer: buyer,
 			expenseType: expenseType,
-			date: new Date(date),
+			date: date,
 			amount: amount || 0,
 			participants: getParticipantsArray()
 		};
-		console.log(expense);
 
-		expensesStore.update((value: Expense[] | null) => {
-			if (!value) return null;
-			value.push(expense);
-			return value;
-		});
-		document.getElementById('add-expense-modal')?.click();
+		fetch(
+			`/api/expenseList?` +
+				new URLSearchParams({
+					expenseListId: id,
+					password: 'hund'
+				}),
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(expense)
+			}
+		)
+			.then((res) => {
+				console.log(res);
+				if (res.status !== 200) return;
+
+				expensesStore.update((value: Expense[] | null) => {
+					if (!value) return null;
+					value.push(expense);
+					return value;
+				});
+
+				buyer = '';
+				expenseType = '';
+				date = new Date().toISOString().substring(0, 10);
+				amount = null;
+				participants.forEach((participant) => {
+					modalParticipants[participant] = true;
+				});
+				document.getElementById('add-expense-modal')?.click();
+				loading = false;
+			})
+			.catch((err) => {
+				console.log(err.status);
+				loading = false;
+			});
 	}
 
 	function capitalizeFirstLetter(string: string) {
@@ -139,7 +176,13 @@
 				</div>
 			</div>
 			<div class="modal-action w-full">
-				<button type="submit" class="btn btn-primary w-full"> Hinzufügen </button>
+				<button type="submit" disabled={loading} class="btn btn-primary w-full">
+					{#if loading}
+						<img class="h-2" src="/loading.svg" alt="loading" />
+					{:else}
+						Hinzufügen
+					{/if}
+				</button>
 			</div>
 		</form>
 	</div>

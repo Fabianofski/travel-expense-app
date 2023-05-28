@@ -15,6 +15,8 @@
 
 	let expenses: Expense[] = [];
 	export let participants: string[] = [];
+	export let id: string;
+
 	expensesStore.subscribe((value) => {
 		if (value) expenses = value;
 		cost = calculateTotal();
@@ -30,7 +32,7 @@
 	}
 </script>
 
-<ExpenseModal {participants} />
+<ExpenseModal {participants} {id} />
 <div class="flex flex-col gap-2">
 	<div class="flex flex-col gap-4">
 		<h1 class="text-lg font-bold">Ausgaben Übersicht</h1>
@@ -53,7 +55,7 @@
 			<!-- head -->
 			<thead>
 				<tr>
-					<th />
+					<th class="relative" />
 					<th>Datum</th>
 					<th>Käufer</th>
 					<th>Betrag</th>
@@ -66,7 +68,7 @@
 				{#each expenses as expense, index}
 					<tr>
 						<td>{index + 1}</td>
-						<td> {expense.date.toLocaleDateString()}</td>
+						<td> {new Date(expense.date).toLocaleDateString()}</td>
 						<td>
 							<div class="flex items-center space-x-3">
 								<div class="avatar tooltip" data-tip={expense.buyer}>

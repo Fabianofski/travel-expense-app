@@ -32,10 +32,10 @@
 		else if (response.status !== 200) throw Error('Internal Error');
 
 		const list: ExpenseListModel = await response.json();
-		if (!list.expenses) list.expenses = [];
+		if (!list.expenses) list.expenses = {};
 
 		participants = list.participants;
-		expensesStore.set(list.expenses);
+		expensesStore.set(Object.values(list.expenses));
 		loading = false;
 		unlocked = true;
 	}
@@ -43,7 +43,7 @@
 
 <div class="flex flex-col gap-16 pt-4">
 	{#if unlocked}
-		<ExpenseList {participants} />
+		<ExpenseList {participants} id={data.id} />
 		<PersonExpenseList {participants} />
 	{:else}
 		<div class="flex flex-col gap-2">

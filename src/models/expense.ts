@@ -1,7 +1,7 @@
 export interface Expense {
 	buyer: string;
 	expenseType: string;
-	date: Date;
+	date: string;
 	amount: number;
 	participants: string[];
 }

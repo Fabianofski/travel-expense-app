@@ -54,8 +54,7 @@
 			<!-- head -->
 			<thead>
 				<tr>
-					<th />
-					<th>Name</th>
+					<th style="position: relative">Name</th>
 					<th>Anzahl</th>
 					<th>Betrag</th>
 					<th>Anteil</th>
@@ -63,9 +62,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each Object.keys(expensesPerPerson) as name, index}
+				{#each Object.keys(expensesPerPerson) as name}
 					<tr>
-						<td>{index + 1}</td>
 						<td>
 							<div class="flex items-center space-x-3">
 								<div class="avatar">
