@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { expense } from './expenses';
+	import type { Expense } from '../../../models/expense';
 
 	function capitalizeFirstLetter(string: string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);
@@ -13,7 +13,7 @@
 		};
 	};
 
-	export let expenses: expense[];
+	export let expenses: Expense[];
 	export let participants: string[];
 
 	function getExpensesPerPerson(): expensesPerPersonType {
@@ -64,7 +64,7 @@
 							<div class="flex items-center space-x-3">
 								<div class="avatar">
 									<div class="mask mask-squircle w-12 h-12">
-										<img src={`./profiles/${name}.png`} alt={`${name} profile`} />
+										<img src={`/profiles/${name}.png`} alt={`${name} profile`} />
 									</div>
 								</div>
 								<div>

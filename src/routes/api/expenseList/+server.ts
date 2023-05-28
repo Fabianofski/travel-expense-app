@@ -1,4 +1,4 @@
-import { json } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import { database } from '../../../lib/client/firebase';
 
 export async function GET({ url }) {

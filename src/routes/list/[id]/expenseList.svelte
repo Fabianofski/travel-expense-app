@@ -1,9 +1,16 @@
 <script lang="ts">
 	import ExpenseModal from './addExpenseModal.svelte';
-	import type { expense } from './expenses';
+	import type { Expense } from '../../../models/expense';
 
-	export let expenses: expense[];
+	export let expenses: Expense[];
 	export let participants: string[];
+
+	const cost: { total: number; totalPerPerson: number } = { total: 0, totalPerPerson: 0 };
+
+	expenses.forEach((expense) => {
+		cost.total += expense.amount;
+	});
+	cost.totalPerPerson = cost.total / participants.length;
 </script>
 
 <ExpenseModal {participants} />
@@ -47,7 +54,7 @@
 								<div class="avatar tooltip" data-tip={expense.buyer}>
 									<div class="mask mask-squircle w-12 h-12">
 										<img
-											src={`profiles/${expense.buyer.toLowerCase()}.png`}
+											src={`/profiles/${expense.buyer.toLowerCase()}.png`}
 											alt={`${expense.buyer} profile`}
 										/>
 									</div>
@@ -65,7 +72,7 @@
 									<div class="avatar -ml-2 tooltip" data-tip={participant}>
 										<div class="mask mask-squircle w-8 h-8">
 											<img
-												src={`profiles/${participant.toLowerCase()}.png`}
+												src={`/profiles/${participant.toLowerCase()}.png`}
 												alt={`${participant} profile`}
 											/>
 										</div>
@@ -81,12 +88,12 @@
 	<div class="stats shadow">
 		<div class="stat">
 			<div class="stat-title">Total</div>
-			<div class="stat-value text-2xl">654,45€</div>
+			<div class="stat-value text-2xl">{cost.total}€</div>
 		</div>
 
 		<div class="stat">
 			<div class="stat-title">Total p. P.</div>
-			<div class="stat-value text-2xl">234,45€</div>
+			<div class="stat-value text-2xl">{cost.totalPerPerson.toFixed(2)}€</div>
 		</div>
 	</div>
 </div>
