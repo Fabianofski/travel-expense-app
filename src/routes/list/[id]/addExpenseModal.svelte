@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import type { Expense } from '../../../models/expense';
 	import { expensesStore } from './store';
 
 	export let id: string;
+	let password: string = '';
 
 	export let participants: string[] = [];
 
@@ -16,6 +18,8 @@
 	});
 
 	let loading = false;
+
+	if (browser) password = localStorage.getItem(`${id}-password`) || '';
 
 	function getParticipantsArray(): string[] {
 		const expenseParticipants: string[] = [];
@@ -33,29 +37,31 @@
 			expenseType: expenseType,
 			date: date,
 			amount: amount || 0,
-			participants: getParticipantsArray()
+			participants: getParticipantsArray(),
+			id: ''
 		};
 
 		fetch(
 			`/api/expenseList?` +
 				new URLSearchParams({
 					expenseListId: id,
-					password: 'hund'
+					password: password
 				}),
 			{
-				method: 'POST',
+				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify(expense)
 			}
 		)
-			.then((res) => {
-				console.log(res);
+			.then(async (res) => {
 				if (res.status !== 200) return;
 
+				const expenseKey = await res.json();
 				expensesStore.update((value: Expense[] | null) => {
 					if (!value) return null;
+					expense.id = expenseKey;
 					value.push(expense);
 					return value;
 				});

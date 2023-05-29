@@ -4,4 +4,5 @@ export interface Expense {
 	date: string;
 	amount: number;
 	participants: string[];
+	id: string;
 }

@@ -4,13 +4,20 @@
 	import PersonExpenseList from './personExpenseList.svelte';
 	import type { ExpenseListModel } from '../../../models/expenseListModel';
 	import { expensesStore } from './store';
+	import { browser } from '$app/environment';
+	import type { Expense } from '../../../models/expense';
 
 	export let data;
 	let loading = false;
 	let unlocked = false;
 	let loginError = '';
-	let password = '';
+	let password: string = '';
 	let participants: string[];
+
+	if (browser) {
+		password = localStorage.getItem(`${data.id}-password`) || '';
+		if (password !== '') unlockList();
+	}
 
 	async function unlockList() {
 		loginError = '';
@@ -34,8 +41,16 @@
 		const list: ExpenseListModel = await response.json();
 		if (!list.expenses) list.expenses = {};
 
+		localStorage.setItem(`${data.id}-password`, password);
+
 		participants = list.participants;
-		expensesStore.set(Object.values(list.expenses));
+		const expenses: Expense[] = [];
+		Object.keys(list.expenses).forEach((id: string) => {
+			const expense: Expense = list.expenses[id];
+			expense.id = id;
+			expenses.push(expense);
+		});
+		expensesStore.set(expenses);
 		loading = false;
 		unlocked = true;
 	}
