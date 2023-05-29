@@ -4,14 +4,25 @@
 	import { expensesStore } from './store';
 	import { browser } from '$app/environment';
 
-	let cost: { total: number; totalPerPerson: number } = { total: 0, totalPerPerson: 0 };
-	function calculateTotal() {
-		let cost: { total: number; totalPerPerson: number } = { total: 0, totalPerPerson: 0 };
+	type statsType = { total: number; totalPerPerson: number; amount: number };
+
+	let stats: statsType = {
+		total: 0,
+		totalPerPerson: 0,
+		amount: 0
+	};
+	function calculateTotal(): statsType {
+		let stats = {
+			total: 0,
+			totalPerPerson: 0,
+			amount: 0
+		};
 		expenses.forEach((expense) => {
-			cost.total += expense.amount;
+			stats.amount++;
+			stats.total += expense.amount;
 		});
-		cost.totalPerPerson = cost.total / participants.length || 0;
-		return cost;
+		stats.totalPerPerson = stats.total / participants.length || 0;
+		return stats;
 	}
 
 	let expenses: Expense[] = [];
@@ -20,7 +31,7 @@
 
 	expensesStore.subscribe((value) => {
 		if (value) expenses = value;
-		cost = calculateTotal();
+		stats = calculateTotal();
 	});
 
 	let password = '';
@@ -74,8 +85,7 @@
 			<!-- head -->
 			<thead>
 				<tr>
-					<th class="relative" />
-					<th>Datum</th>
+					<th style="position: relative">Datum</th>
 					<th>Käufer</th>
 					<th>Betrag</th>
 					<th>Typ</th>
@@ -86,7 +96,6 @@
 			<tbody>
 				{#each expenses as expense, index}
 					<tr>
-						<td>{index + 1}</td>
 						<td> {new Date(expense.date).toLocaleDateString()}</td>
 						<td>
 							<div class="flex items-center space-x-3">
@@ -150,12 +159,20 @@
 	<div class="stats shadow">
 		<div class="stat">
 			<div class="stat-title">Total</div>
-			<div class="stat-value text-2xl">{cost.total.toFixed(2)}€</div>
+			<div class="stat-value text-2xl">{stats.total.toFixed(2)}€</div>
 		</div>
 
 		<div class="stat">
 			<div class="stat-title">Total p. P.</div>
-			<div class="stat-value text-2xl">{cost.totalPerPerson.toFixed(2)}€</div>
+			<div class="stat-value text-2xl">{stats.totalPerPerson.toFixed(2)}€</div>
+		</div>
+
+		<div class="stat">
+			<div class="stat-title">Anzahl</div>
+			<div class="stat-value text-2xl">
+				{stats.amount}
+				{stats.amount === 1 ? 'Eintrag' : 'Einträge'}
+			</div>
 		</div>
 	</div>
 </div>
