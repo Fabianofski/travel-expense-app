@@ -39,7 +39,7 @@
 
 	function removeExpense(index: number) {
 		fetch(
-			`/api/expenseList?` +
+			`/api/expenseList/expenses?` +
 				new URLSearchParams({
 					expenseListId: id,
 					expenseId: expenses[index].id,

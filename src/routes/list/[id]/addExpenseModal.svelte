@@ -42,7 +42,7 @@
 		};
 
 		fetch(
-			`/api/expenseList?` +
+			`/api/expenseList/expenses?` +
 				new URLSearchParams({
 					expenseListId: id,
 					password: password
