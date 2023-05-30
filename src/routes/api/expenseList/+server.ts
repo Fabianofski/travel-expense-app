@@ -1,10 +1,17 @@
+import { database } from '$lib/client/firebase';
 import { json } from '@sveltejs/kit';
-import { fetchList } from './expenseList';
+import type { ExpenseListModel } from '../../../models/expenseListModel';
 
-export async function GET({ url }) {
-	const id = url.searchParams.get('expenseListId') || '';
-	const password = url.searchParams.get('password') || '';
+export async function GET() {
+	let ref = database.ref('expenses/');
+	const snapshot = await ref.get();
 
-	const response = await fetchList(id, password);
-	return json(response);
+	const data = snapshot.val();
+	const lists: { id: string; name: string }[] = [];
+	Object.keys(data).forEach((id: string) => {
+		const list: ExpenseListModel = data[id];
+		lists.push({ id: id, name: list.name });
+	});
+
+	return json(lists);
 }

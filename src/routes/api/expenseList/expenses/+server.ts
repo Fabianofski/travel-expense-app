@@ -1,6 +1,14 @@
 import { json } from '@sveltejs/kit';
 import { database } from '../../../../lib/client/firebase';
-import { fetchList } from '../expenseList';
+import { fetchList } from './expenseList';
+
+export async function GET({ url }) {
+	const id = url.searchParams.get('expenseListId') || '';
+	const password = url.searchParams.get('password') || '';
+
+	const response = await fetchList(id, password);
+	return json(response);
+}
 
 export async function PUT({ url, request }) {
 	const id = url.searchParams.get('expenseListId') || '';

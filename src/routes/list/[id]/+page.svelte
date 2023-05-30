@@ -24,7 +24,7 @@
 		loading = true;
 
 		const response = await fetch(
-			`/api/expenseList?` +
+			`/api/expenseList/expenses?` +
 				new URLSearchParams({
 					expenseListId: data.id,
 					password: password

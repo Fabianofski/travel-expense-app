@@ -9,7 +9,7 @@
 		<h1
 			class="text-lg font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-purple-400 via-rose-300 to-fuchsia-600"
 		>
-			TRAVEL EXPENSE APP - POLEN
+			TRAVEL EXPENSE APP
 		</h1>
 	</nav>
 	<div class="px-2 pt-16 pb-4 w-full h-full max-w-3xl">

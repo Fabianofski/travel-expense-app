@@ -1,5 +1,5 @@
 import { database } from '$lib/client/firebase';
-import type { ExpenseListModel } from '../../../models/expenseListModel';
+import type { ExpenseListModel } from '../../../../models/expenseListModel';
 
 export async function fetchList(
 	id: string,
