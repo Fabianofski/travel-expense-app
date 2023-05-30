@@ -39,6 +39,7 @@
 		else if (response.status !== 200) throw Error('Internal Error');
 
 		const list: ExpenseListModel = await response.json();
+		console.log(list);
 		if (!list.expenses) list.expenses = {};
 
 		localStorage.setItem(`${data.id}-password`, password);

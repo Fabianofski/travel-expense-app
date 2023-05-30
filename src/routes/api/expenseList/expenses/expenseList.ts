@@ -5,7 +5,7 @@ export async function fetchList(
 	id: string,
 	password: string
 ): Promise<Response | ExpenseListModel> {
-	let ref = database.ref('expenses/' + id);
+	let ref = database.ref('lists/' + id);
 	const snapshot = await ref.get();
 
 	const data: ExpenseListModel = snapshot.val();
