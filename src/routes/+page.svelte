@@ -21,7 +21,7 @@
 	</label>
 	<div class="flex flex-col gap-2">
 		{#each data.lists as list}
-			<div class="card w-full bg-base-100 shadow-xl">
+			<div class="card w-full bg-base-100 shadow-xl static">
 				<div class="flex p-2 w-full justify-between">
 					<h2 class="card-title">{list.name}</h2>
 					<div class="card-actions justify-end">
