@@ -1,5 +1,6 @@
 import { database } from '$lib/client/firebase';
 import type { ExpenseListModel } from '../../../../models/expenseListModel';
+import bcrypt from 'bcrypt';
 
 export async function fetchList(
 	id: string,
@@ -11,7 +12,8 @@ export async function fetchList(
 	const data: ExpenseListModel = snapshot.val();
 
 	if (!data) return new Response(null, { status: 404 });
-	else if (data.password !== password) return new Response(null, { status: 403 });
+	else if (await bcrypt.compare(data.password, password))
+		return new Response(null, { status: 403 });
 
 	return data;
 }

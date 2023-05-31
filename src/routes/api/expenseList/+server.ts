@@ -1,6 +1,8 @@
 import { database } from '$lib/client/firebase';
 import { json } from '@sveltejs/kit';
 import type { ExpenseListModel } from '../../../models/expenseListModel';
+import bcrypt from 'bcrypt';
+const saltRounds = 10;
 
 export async function GET() {
 	let ref = database.ref('lists/');
@@ -20,6 +22,8 @@ export async function GET() {
 
 export async function POST({ request }) {
 	let ref = database.ref(`lists/`);
-	const list = await ref.push(await request.json());
+	const listData: ExpenseListModel = await request.json();
+	listData.password = await bcrypt.hash(listData.password, saltRounds);
+	const list = await ref.push(listData);
 	return json(list.key);
 }
