@@ -2,7 +2,6 @@
 	import ExpenseModal from './addExpenseModal.svelte';
 	import type { Expense } from '../../../models/expense';
 	import { expensesStore } from './store';
-	import { browser } from '$app/environment';
 
 	type statsType = { total: number; totalPerPerson: number; amount: number };
 
@@ -34,16 +33,12 @@
 		stats = calculateTotal();
 	});
 
-	let password = '';
-	if (browser) password = localStorage.getItem(`${id}-password`) || '';
-
 	function removeExpense(index: number) {
 		fetch(
 			`/api/expenseList/expenses?` +
 				new URLSearchParams({
 					expenseListId: id,
-					expenseId: expenses[index].id,
-					password: password
+					expenseId: expenses[index].id
 				}),
 			{
 				method: 'DELETE'

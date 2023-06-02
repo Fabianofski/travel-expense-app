@@ -1,3 +1,5 @@
-export function load({ params }) {
-	return { id: params.id };
+export function load({ params, cookies }) {
+	const id = params.id;
+	const token = cookies.get(`${id}-token`);
+	return { id, token };
 }

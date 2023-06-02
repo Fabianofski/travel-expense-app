@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import type { Expense } from '../../../models/expense';
 	import { expensesStore } from './store';
 
 	export let id: string;
-	let password: string = '';
 
 	export let participants: string[] = [];
 
@@ -18,8 +16,6 @@
 	});
 
 	let loading = false;
-
-	if (browser) password = localStorage.getItem(`${id}-password`) || '';
 
 	function getParticipantsArray(): string[] {
 		const expenseParticipants: string[] = [];
@@ -44,8 +40,7 @@
 		fetch(
 			`/api/expenseList/expenses?` +
 				new URLSearchParams({
-					expenseListId: id,
-					password: password
+					expenseListId: id
 				}),
 			{
 				method: 'PUT',

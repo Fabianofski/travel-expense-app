@@ -18,7 +18,7 @@
 					/></svg
 				></label
 			>
-			<ul tabindex="-1" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+			<ul tabindex="-1" class="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52">
 				<li><a href="#d">Item 1</a></li>
 			</ul>
 		</div>

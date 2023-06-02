@@ -25,7 +25,8 @@
 			data[expense.buyer.toLowerCase()].amount += expense.amount;
 			data[expense.buyer.toLowerCase()].times++;
 			expense.participants.forEach((participant) => {
-				data[participant].share += expense.amount / expense.participants.length;
+				console.log(participant.toLowerCase());
+				data[participant.toLowerCase()].share += expense.amount / expense.participants.length;
 			});
 		});
 
