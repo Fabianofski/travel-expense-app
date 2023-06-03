@@ -72,7 +72,6 @@
 				loading = false;
 			})
 			.catch((err) => {
-				console.log(err.status);
 				loading = false;
 			});
 	}

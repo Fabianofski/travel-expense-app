@@ -2,6 +2,7 @@ import { database } from '$lib/client/firebase';
 import type { Cookies } from '@sveltejs/kit';
 import type { ExpenseListModel } from '../../../../models/expenseListModel';
 import bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function fetchList(
 	id: string,
@@ -14,20 +15,19 @@ export async function fetchList(
 	const snapshot = await ref.get();
 
 	const data: ExpenseListModel = snapshot.val();
+	const tokenValid = token !== '' && (await checkIfTokenValid(id, token));
+	const passwordValid = await bcrypt.compare(password, data.password);
 
 	if (!data) return new Response(null, { status: 404 });
-	else if (token !== '' && (await !checkIfTokenValid(id, token)))
-		return new Response(null, { status: 403 });
-	else if (await bcrypt.compare(data.password, password))
-		return new Response(null, { status: 403 });
+	else if (!tokenValid && !passwordValid) return new Response(null, { status: 403 });
 	else {
-		if (token === '') await addNewToken(id, cookies);
+		if (!tokenValid) await addNewToken(id, cookies);
 		return data;
 	}
 }
 
 async function addNewToken(id: string, cookies: Cookies) {
-	const tokenId = '12345';
+	const tokenId = uuidv4();
 	const tokenHash = await bcrypt.hash(tokenId, 10);
 	let ref = database.ref('tokens/' + id);
 
@@ -46,6 +46,5 @@ async function checkIfTokenValid(id: string, token: string): Promise<boolean> {
 		const storedToken = data[id];
 		if (await bcrypt.compare(token, storedToken)) return true;
 	}
-	console.log('invalid');
 	return false;
 }

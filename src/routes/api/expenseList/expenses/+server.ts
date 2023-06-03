@@ -1,12 +1,15 @@
 import { json } from '@sveltejs/kit';
 import { database } from '../../../../lib/client/firebase';
 import { fetchList } from './expenseList';
+import type { ExpenseListModel } from '../../../../models/expenseListModel';
 
 export async function GET({ url, cookies }) {
 	const id = url.searchParams.get('expenseListId') || '';
 	const password = url.searchParams.get('password') || '';
 
 	const response = await fetchList(id, password, cookies);
+	if (response instanceof Response) return response;
+
 	return json(response);
 }
 

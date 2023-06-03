@@ -44,11 +44,9 @@
 				method: 'DELETE'
 			}
 		).then((res) => {
-			console.log(res);
 			if (res.status !== 200) return;
 
 			expensesStore.update((value: Expense[] | null) => {
-				console.log(value);
 				if (!value) return [];
 				value.splice(index, 1);
 				return value;

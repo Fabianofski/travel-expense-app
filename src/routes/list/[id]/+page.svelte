@@ -15,7 +15,6 @@
 	let participants: string[];
 
 	onMount(async () => {
-		console.log(data.token);
 		if (data.token !== undefined) unlockList();
 	});
 
@@ -39,7 +38,6 @@
 		else if (response.status !== 200) throw Error('Internal Error');
 
 		const list: ExpenseListModel = await response.json();
-		console.log(list);
 		if (!list.expenses) list.expenses = {};
 
 		participants = list.participants;
