@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Expense } from '../../../models/expense';
 	import { expensesStore } from './store';
-	import { getExpensesPerPerson, type expensesPerPersonType } from './utils';
+	import { getExpensesPerPerson, type expensesPerPersonType, capitalizeFirstLetter } from './utils';
 
 	type CashFlow = {
 		from: string;
@@ -49,8 +49,51 @@
 	}
 </script>
 
-<div>
-	{#each cashFlow as flow}
-		<p>From: {flow.from} To: {flow.to} Amount: {flow.amount.toFixed(2)}</p>
-	{/each}
+<div class="flex flex-col gap-2">
+	<h1 class="text-lg font-bold">Vorgeschlagener Ausgleich:</h1>
+	<div>
+		<div class="overflow-x-auto w-full">
+			<table class="table w-full">
+				<!-- head -->
+				<thead>
+					<tr>
+						<th style="position: relative">Von</th>
+						<th>Zu</th>
+						<th>Betrag</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each cashFlow as flow}
+						<tr>
+							<td>
+								<div class="flex items-center space-x-3">
+									<div class="avatar">
+										<div class="mask mask-squircle w-12 h-12">
+											<img src={`/profiles/${flow.from}.png`} alt={`${flow.from} profile`} />
+										</div>
+									</div>
+									<div>
+										<div class="font-bold">{capitalizeFirstLetter(flow.from)}</div>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="flex items-center space-x-3">
+									<div class="avatar">
+										<div class="mask mask-squircle w-12 h-12">
+											<img src={`/profiles/${flow.to}.png`} alt={`${flow.to} profile`} />
+										</div>
+									</div>
+									<div>
+										<div class="font-bold">{capitalizeFirstLetter(flow.to)}</div>
+									</div>
+								</div>
+							</td>
+							<td>{flow.amount.toFixed(2)}€</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>

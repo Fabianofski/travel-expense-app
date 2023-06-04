@@ -1,4 +1,4 @@
-<div class="navbar bg-base-100 fixed backdrop-blur bg-opcaity-10">
+<div class="navbar bg-base-100 fixed z-40 backdrop-blur bg-opcaity-10">
 	<div class="flex-1">
 		<a href="/" class="btn btn-ghost normal-case text-xl">Travel Expense App</a>
 	</div>
