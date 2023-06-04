@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Expense } from '../../../models/expense';
 	import { expensesStore } from './store';
+	import { capitalizeFirstLetter } from './utils';
 
 	export let id: string;
 
@@ -74,10 +75,6 @@
 			.catch((err) => {
 				loading = false;
 			});
-	}
-
-	function capitalizeFirstLetter(string: string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 </script>
 

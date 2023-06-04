@@ -6,6 +6,7 @@
 	import { expensesStore } from './store';
 	import type { Expense } from '../../../models/expense';
 	import { onMount } from 'svelte';
+	import CashFlow from './cashFlow.svelte';
 
 	export let data;
 	let loading = false;
@@ -57,6 +58,7 @@
 	{#if unlocked}
 		<ExpenseList {participants} id={data.id} />
 		<PersonExpenseList {participants} />
+		<CashFlow {participants} />
 	{:else}
 		<div class="flex flex-col gap-2">
 			<form class="w-full flex flex-col items-center">

@@ -1,49 +1,16 @@
 <script lang="ts">
 	import type { Expense } from '../../../models/expense';
 	import { expensesStore } from './store';
-
-	type expensesPerPersonType = {
-		[key: string]: {
-			times: number;
-			amount: number;
-			share: number;
-		};
-	};
-
-	function getExpensesPerPerson(): expensesPerPersonType {
-		const data: expensesPerPersonType = {};
-
-		participants.forEach((participant) => {
-			data[participant.toLowerCase()] = {
-				amount: 0,
-				times: 0,
-				share: 0
-			};
-		});
-
-		expenses.forEach((expense) => {
-			data[expense.buyer.toLowerCase()].amount += expense.amount;
-			data[expense.buyer.toLowerCase()].times++;
-			expense.participants.forEach((participant) => {
-				data[participant.toLowerCase()].share += expense.amount / expense.participants.length;
-			});
-		});
-
-		return Object.fromEntries(Object.entries(data).sort(([, a], [, b]) => b.amount - a.amount));
-	}
+	import { getExpensesPerPerson, type expensesPerPersonType, capitalizeFirstLetter } from './utils';
 
 	let expenses: Expense[] = [];
 	export let participants: string[] = [];
 
-	let expensesPerPerson: expensesPerPersonType = getExpensesPerPerson();
+	let expensesPerPerson: expensesPerPersonType = getExpensesPerPerson(participants, expenses);
 	expensesStore.subscribe((value) => {
 		if (value) expenses = value;
-		expensesPerPerson = getExpensesPerPerson();
+		expensesPerPerson = getExpensesPerPerson(participants, expenses);
 	});
-
-	function capitalizeFirstLetter(string: string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	}
 </script>
 
 <div class="flex flex-col gap-2">
