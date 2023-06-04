@@ -1,5 +1,8 @@
 <script lang="ts">
 	import AddListModal from './addListModal.svelte';
+	import { titleStore } from './list/[id]/store';
+
+	titleStore.set('Travel Expense App');
 
 	export let data;
 </script>

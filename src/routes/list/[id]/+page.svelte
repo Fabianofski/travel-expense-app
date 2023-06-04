@@ -3,7 +3,7 @@
 	import ExpenseList from './expenseList.svelte';
 	import PersonExpenseList from './personExpenseList.svelte';
 	import type { ExpenseListModel } from '../../../models/expenseListModel';
-	import { expensesStore } from './store';
+	import { expensesStore, titleStore } from './store';
 	import type { Expense } from '../../../models/expense';
 	import { onMount } from 'svelte';
 	import CashFlow from './cashFlow.svelte';
@@ -49,6 +49,7 @@
 			expenses.push(expense);
 		});
 		expensesStore.set(expenses);
+		titleStore.set('Liste: ' + list.listName);
 		loading = false;
 		unlocked = true;
 	}
