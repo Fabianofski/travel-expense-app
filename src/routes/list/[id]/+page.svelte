@@ -7,6 +7,7 @@
 	import type { Expense } from '../../../models/expense';
 	import { onMount } from 'svelte';
 	import CashFlow from './cashFlow.svelte';
+	import TypeExpenseList from './typeExpenseList.svelte';
 
 	export let data;
 	let loading = false;
@@ -58,6 +59,7 @@
 <div class="flex flex-col gap-16 pt-4">
 	{#if unlocked}
 		<ExpenseList {participants} id={data.id} />
+		<TypeExpenseList />
 		<PersonExpenseList {participants} />
 		<CashFlow {participants} />
 	{:else}
