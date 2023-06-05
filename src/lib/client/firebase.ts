@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin';
+import admin from 'firebase-admin';
 import { credential, databaseURL } from './credentials';
 
 const firebaseConfig = {
