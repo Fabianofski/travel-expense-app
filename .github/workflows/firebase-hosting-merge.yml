@@ -9,6 +9,7 @@ name: Deploy to Firebase Hosting on merge
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    environment: travel-expense-app
     env:
       FIREBASE_PRIVATE_KEY: '${{ secrets.FIREBASE_PRIVATE_KEY }}'
       FIREBASE_PROJECT_ID: travel-expense-app-2b6ad
