@@ -6,7 +6,6 @@ import {
 	FIREBASE_DATABASE_URL
 } from '$env/static/private';
 
-console.log('URL:', FIREBASE_DATABASE_URL);
 const firebaseConfig = {
 	credential: admin.credential.cert({
 		projectId: FIREBASE_PROJECT_ID,

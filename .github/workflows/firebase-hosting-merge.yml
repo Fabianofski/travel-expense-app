@@ -24,3 +24,5 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TRAVEL_EXPENSE_APP_2B6AD }}'
           channelId: live
           projectId: travel-expense-app-2b6ad
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
