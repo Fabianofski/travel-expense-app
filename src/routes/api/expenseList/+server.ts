@@ -14,7 +14,7 @@ export async function GET() {
 	const lists: { id: string; name: string }[] = [];
 	Object.keys(data).forEach((id: string) => {
 		const list: ExpenseListModel = data[id];
-		lists.push({ id: id, name: list.listName });
+		lists.push({ id: id, name: list.listName, creator: list.creator });
 	});
 
 	return json(lists);

@@ -26,7 +26,10 @@
 		{#each data.lists as list}
 			<div class="card w-full bg-base-100 shadow-xl static">
 				<div class="flex p-2 w-full justify-between">
-					<h2 class="card-title">{list.name}</h2>
+					<div>
+						<p class="text-sm">{list.creator}</p>
+						<h2 class="text-2xl card-title">{list.name}</h2>
+					</div>
 					<div class="card-actions justify-end">
 						<a href={`/list/${list.id}`} class="btn btn-primary">Anzeigen</a>
 					</div>
