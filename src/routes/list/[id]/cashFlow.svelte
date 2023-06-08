@@ -1,7 +1,12 @@
 <script lang="ts">
 	import type { Expense } from '../../../models/expense';
 	import { expensesStore } from './store';
-	import { getExpensesPerPerson, type expensesPerPersonType, capitalizeFirstLetter } from './utils';
+	import {
+		getExpensesPerPerson,
+		type expensesPerPersonType,
+		capitalizeFirstLetter,
+		profileError
+	} from './utils';
 
 	type CashFlow = {
 		from: string;
@@ -69,7 +74,11 @@
 								<div class="flex items-center space-x-3">
 									<div class="avatar">
 										<div class="mask mask-squircle w-12 h-12">
-											<img src={`/profiles/${flow.from}.png`} alt={`${flow.from} profile`} />
+											<img
+												src={`/profiles/${flow.from}.png`}
+												alt={`${flow.from} profile`}
+												on:error={(e) => profileError(e, flow.from)}
+											/>
 										</div>
 									</div>
 									<div>
@@ -81,7 +90,11 @@
 								<div class="flex items-center space-x-3">
 									<div class="avatar">
 										<div class="mask mask-squircle w-12 h-12">
-											<img src={`/profiles/${flow.to}.png`} alt={`${flow.to} profile`} />
+											<img
+												src={`/profiles/${flow.to}.png`}
+												alt={`${flow.to} profile`}
+												on:error={(e) => profileError(e, flow.to)}
+											/>
 										</div>
 									</div>
 									<div>
