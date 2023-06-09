@@ -2,6 +2,8 @@
 	import ExpenseModal from './addExpenseModal.svelte';
 	import type { Expense } from '../../../models/expense';
 	import { expensesStore } from './store';
+	import { getProfilePicture } from './utils';
+	import Profile from './profile.svelte';
 
 	type statsType = { total: number; totalPerPerson: number; amount: number };
 
@@ -94,10 +96,7 @@
 							<div class="flex items-center space-x-3">
 								<div class="avatar tooltip" data-tip={expense.buyer}>
 									<div class="mask mask-squircle w-12 h-12">
-										<img
-											src={`/profiles/${expense.buyer.toLowerCase()}.png`}
-											alt={`${expense.buyer} profile`}
-										/>
+										<Profile url={getProfilePicture(expense.buyer)} name={expense.buyer} />
 									</div>
 								</div>
 								<div>
@@ -112,10 +111,7 @@
 								{#each expense.participants as participant}
 									<div class="avatar -ml-2 tooltip" data-tip={participant}>
 										<div class="mask mask-squircle w-8 h-8">
-											<img
-												src={`/profiles/${participant.toLowerCase()}.png`}
-												alt={`${participant} profile`}
-											/>
+											<Profile url={getProfilePicture(participant)} name={participant} />
 										</div>
 									</div>
 								{/each}

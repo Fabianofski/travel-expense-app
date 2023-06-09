@@ -1,4 +1,5 @@
 import type { Expense } from '../../../models/expense';
+import { profilesStore } from './store';
 
 export type expensesPerPersonType = {
 	[key: string]: {
@@ -37,41 +38,21 @@ export function capitalizeFirstLetter(string: string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export function profileError(event: Event, name: string) {
-	if (event.target) {
-		const image = event.target as HTMLImageElement;
-		image.src = '/profiles/default.svg';
-	}
+let profiles: { [key: string]: string } = {};
+profilesStore.subscribe((value) => {
+	console.log(profiles);
+	profiles = value;
+});
+
+export function getProfilePicture(name: string): string {
+	if (!(name.toLowerCase() in profiles)) return 'default';
+	else return profiles[name.toLowerCase()];
 }
 
-function wordToHexColor(word: string): string {
-	let red = 0;
-	let green = 0;
-	let blue = 0;
-
+export function wordToHexColor(word: string): string {
+	let colorNum = 0;
 	for (let i = 0; i < word.length; i++) {
-		const charCode = word.charCodeAt(i);
-
-		switch (i % 3) {
-			case 0:
-				red += charCode;
-				break;
-			case 1:
-				green += charCode;
-				break;
-			case 2:
-				blue += charCode;
-				break;
-		}
+		colorNum += word.charCodeAt(i);
 	}
-
-	red = red % 256;
-	green = green % 256;
-	blue = blue % 256;
-
-	const hexRed = red.toString(16).padStart(2, '0');
-	const hexGreen = green.toString(16).padStart(2, '0');
-	const hexBlue = blue.toString(16).padStart(2, '0');
-
-	return `#${hexRed}${hexGreen}${hexBlue}`;
+	return 'hsl(' + ((colorNum * 10) % 360) + ',70%,40%)';
 }

@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type { Expense } from '../../../models/expense';
+	import Profile from './profile.svelte';
 	import { expensesStore } from './store';
 	import {
 		getExpensesPerPerson,
 		type expensesPerPersonType,
 		capitalizeFirstLetter,
-		profileError
+		getProfilePicture
 	} from './utils';
 
 	let expenses: Expense[] = [];
@@ -40,11 +41,7 @@
 							<div class="flex items-center space-x-3">
 								<div class="avatar">
 									<div class="mask mask-squircle w-12 h-12">
-										<img
-											src={`/profiles/${name}.png`}
-											alt={`${name} profile`}
-											on:error={(e) => profileError(e, name)}
-										/>
+										<Profile url={getProfilePicture(name)} {name} />
 									</div>
 								</div>
 								<div>

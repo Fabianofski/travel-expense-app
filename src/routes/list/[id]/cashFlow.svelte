@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type { Expense } from '../../../models/expense';
+	import Profile from './profile.svelte';
 	import { expensesStore } from './store';
 	import {
 		getExpensesPerPerson,
 		type expensesPerPersonType,
 		capitalizeFirstLetter,
-		profileError
+		getProfilePicture
 	} from './utils';
 
 	type CashFlow = {
@@ -74,11 +75,7 @@
 								<div class="flex items-center space-x-3">
 									<div class="avatar">
 										<div class="mask mask-squircle w-12 h-12">
-											<img
-												src={`/profiles/${flow.from}.png`}
-												alt={`${flow.from} profile`}
-												on:error={(e) => profileError(e, flow.from)}
-											/>
+											<Profile url={getProfilePicture(flow.from)} name={flow.from} />
 										</div>
 									</div>
 									<div>
@@ -90,11 +87,7 @@
 								<div class="flex items-center space-x-3">
 									<div class="avatar">
 										<div class="mask mask-squircle w-12 h-12">
-											<img
-												src={`/profiles/${flow.to}.png`}
-												alt={`${flow.to} profile`}
-												on:error={(e) => profileError(e, flow.to)}
-											/>
+											<Profile url={getProfilePicture(flow.to)} name={flow.to} />
 										</div>
 									</div>
 									<div>

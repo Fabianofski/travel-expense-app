@@ -3,7 +3,7 @@
 	import ExpenseList from './expenseList.svelte';
 	import PersonExpenseList from './personExpenseList.svelte';
 	import type { ExpenseListModel } from '../../../models/expenseListModel';
-	import { expensesStore, titleStore } from './store';
+	import { expensesStore, profilesStore, titleStore } from './store';
 	import type { Expense } from '../../../models/expense';
 	import { onMount } from 'svelte';
 	import CashFlow from './cashFlow.svelte';
@@ -43,6 +43,7 @@
 		if (!list.expenses) list.expenses = {};
 
 		participants = list.participants;
+		profilesStore.set(list.profiles);
 		const expenses: Expense[] = [];
 		Object.keys(list.expenses).forEach((id: string) => {
 			const expense: Expense = list.expenses[id];
