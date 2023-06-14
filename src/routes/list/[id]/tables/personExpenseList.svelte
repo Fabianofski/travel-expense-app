@@ -23,7 +23,7 @@
 	<h1 class="text-lg font-bold">Ausgaben pro Person</h1>
 
 	<div class="overflow-x-auto w-full">
-		<table class="table w-full">
+		<table class="table w-full bg-base-100">
 			<!-- head -->
 			<thead>
 				<tr>

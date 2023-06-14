@@ -59,7 +59,7 @@
 	<h1 class="text-lg font-bold">Vorgeschlagener Ausgleich:</h1>
 	<div>
 		<div class="overflow-x-auto w-full">
-			<table class="table w-full">
+			<table class="table w-full bg-base-100">
 				<!-- head -->
 				<thead>
 					<tr>
