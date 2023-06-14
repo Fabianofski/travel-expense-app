@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { error } from '@sveltejs/kit';
-	import ExpenseList from './expenseList.svelte';
-	import PersonExpenseList from './personExpenseList.svelte';
+	import ExpenseList from './tables/expenseList.svelte';
+	import PersonExpenseList from './tables/personExpenseList.svelte';
 	import type { ExpenseListModel } from '../../../models/expenseListModel';
 	import { expensesStore, profilesStore, titleStore } from './store';
 	import type { Expense } from '../../../models/expense';
 	import { onMount } from 'svelte';
-	import CashFlow from './cashFlow.svelte';
-	import TypeExpenseList from './typeExpenseList.svelte';
+	import CashFlow from './tables/cashFlow.svelte';
+	import TypeExpenseList from './tables/typeExpenseList.svelte';
 
 	export let data;
 	let loading = false;

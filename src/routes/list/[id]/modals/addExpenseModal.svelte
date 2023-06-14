@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Expense } from '../../../models/expense';
-	import { expensesStore } from './store';
-	import { capitalizeFirstLetter } from './utils';
+	import type { Expense } from '../../../../models/expense';
+	import { expensesStore } from '../store';
+	import { capitalizeFirstLetter } from '../utils';
 
 	export let id: string;
 

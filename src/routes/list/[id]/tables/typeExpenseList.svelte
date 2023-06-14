@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Expense } from '../../../models/expense';
-	import { expensesStore } from './store';
+	import type { Expense } from '../../../../models/expense';
+	import { expensesStore } from '../store';
 
 	type ExpensesByType = {
 		[key: string]: {

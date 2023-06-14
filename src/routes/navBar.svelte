@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { titleStore } from './list/[id]/store';
 	import { page } from '$app/stores';
-	import ListHamburger from './listHamburger.svelte';
+	import ListHamburger from './list/[id]/components/listHamburger.svelte';
 
 	let title = 'Travel Expense App';
 	titleStore.subscribe((value) => {

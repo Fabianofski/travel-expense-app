@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { Expense } from '../../../models/expense';
-	import Profile from './profile.svelte';
-	import { expensesStore } from './store';
+	import type { Expense } from '../../../../models/expense';
+	import Profile from '../components/profile.svelte';
+	import { expensesStore } from '../store';
 	import {
 		getExpensesPerPerson,
 		type expensesPerPersonType,
 		capitalizeFirstLetter,
 		getProfilePicture
-	} from './utils';
+	} from '../utils';
 
 	let expenses: Expense[] = [];
 	export let participants: string[] = [];

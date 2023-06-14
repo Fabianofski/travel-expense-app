@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { capitalizeFirstLetter, wordToHexColor } from './utils';
+	import { capitalizeFirstLetter, wordToHexColor } from '../utils';
 
 	export let url: string;
 	export let name: string;

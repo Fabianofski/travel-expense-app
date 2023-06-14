@@ -1,9 +1,9 @@
 <script lang="ts">
-	import ExpenseModal from './addExpenseModal.svelte';
-	import type { Expense } from '../../../models/expense';
-	import { expensesStore } from './store';
-	import { getProfilePicture } from './utils';
-	import Profile from './profile.svelte';
+	import ExpenseModal from '../modals/addExpenseModal.svelte';
+	import type { Expense } from '../../../../models/expense';
+	import { expensesStore } from '../store';
+	import { getProfilePicture } from '../utils';
+	import Profile from '../components/profile.svelte';
 
 	type statsType = { total: number; totalPerPerson: number; amount: number };
 

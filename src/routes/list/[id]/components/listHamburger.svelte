@@ -17,7 +17,7 @@
 		<ul tabindex="-1" class="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52">
 			<li>
 				<div class="flex justify-between">
-					Settings
+					Einstellungen
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -41,7 +41,7 @@
 			</li>
 			<li>
 				<div class="flex justify-between">
-					Edit List
+					Liste bearbeiten
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -60,7 +60,7 @@
 			</li>
 			<li>
 				<div class="flex justify-between bg-error text-gray-900">
-					Delete List
+					Liste löschen
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
