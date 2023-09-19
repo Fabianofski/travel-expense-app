@@ -9,6 +9,7 @@
 
 	let buyer: string = '';
 	let expenseType: string = '';
+	let currency: string = 'EUR';
 	let date: string = new Date().toISOString().substring(0, 10);
 	let amount: number | null = null;
 	let modalParticipants: { [key: string]: boolean } = {};
@@ -28,12 +29,13 @@
 
 	function handleSubmit() {
 		loading = true;
+		const converted = currency == 'EUR' ? amount : (amount || 0) / 4.45;
 
 		let expense: Expense = {
 			buyer: buyer,
 			expenseType: expenseType,
 			date: date,
-			amount: amount || 0,
+			amount: converted || 0,
 			participants: getParticipantsArray(),
 			id: ''
 		};
@@ -138,19 +140,30 @@
 					required
 				/>
 			</div>
-			<div class="form-control w-full max-w-s">
-				<label class="label" for="">
-					<span class="label-text">Betrag</span>
-				</label>
-				<input
-					name="amount"
-					type="number"
-					step="0.01"
-					placeholder="0,00€"
-					class="input input-bordered w-full max-w-s"
-					bind:value={amount}
-					required
-				/>
+			<div class="flex w-full">
+				<div class="form-control w-full max-w-s flex-2">
+					<label class="label" for="">
+						<span class="label-text">Betrag</span>
+					</label>
+					<input
+						name="amount"
+						type="number"
+						step="0.01"
+						placeholder="0,00"
+						class="input input-bordered w-full max-w-s"
+						bind:value={amount}
+						required
+					/>
+				</div>
+				<div class="form-control w-full max-w-s flex-1">
+					<label class="label" for="">
+						<span class="label-text">Währung</span>
+					</label>
+					<select class="select select-bordered max-w-xs" bind:value={currency}>
+						<option selected>EUR</option>
+						<option>PLN</option>
+					</select>
+				</div>
 			</div>
 			<div class="form-control w-full max-w-s">
 				<label class="label" for="">
